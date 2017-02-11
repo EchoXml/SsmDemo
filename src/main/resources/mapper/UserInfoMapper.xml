@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echo.dao.UserInfoDao">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <!-- 查询数据库中是否存在该用户名 -->
+    <select id="queryByUserName" resultType="int" parameterType="String">
+        <!-- 具体的sql -->
+        SELECT
+           count(1)
+        FROM
+            userinfo
+        WHERE
+           username=#{username}
+    </select>
+	<!-- 检验用户名与密码在数据库中是否有匹配项 -->
+    <select id="queryByNameAndPwd" resultType="userinfo">
+       SELECT
+           *
+        FROM
+            userinfo
+        WHERE
+           username=#{username} and  `password`=#{password}
+    </select>
+	<!-- 新增一条用户记录 -->
+    <insert id="addUserInfo" parameterType="userinfo">
+    	INSERT into userinfo(username,password,nickname) 
+    	values(#{username},#{password},#{nickname})
+    </insert>
+</mapper>
